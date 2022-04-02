@@ -1,13 +1,23 @@
 GET http://localhost:3000/orders
 
 ###
-GET http://localhost:3000/orders/123
+GET http://localhost:3000/orders/3fe2f48e-a3e6-4633-b9i08-5a712e8f6c62
 
 ###
 POST http://localhost:3000/orders
 Content-Type: application/json
 
 {
-  "account_id": 1,
-  "value": 100
+  "amount": 520.4
 }
+
+###
+PATCH http://localhost:3000/orders/3baf2766-acec-4552-919b-cc1bd4ac49aa
+Content-Type: application/json
+
+{
+  "amount": 300
+}
+
+###
+DELETE http://localhost:3000/orders/3baf2766-acec-4552-919b-cc1bd4ac49aa
