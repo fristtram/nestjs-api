@@ -1,23 +1,23 @@
-GET http://localhost:3000/orders
+GET http://localhost:3000/api/v1/orders
 
 ###
-GET http://localhost:3000/orders/3fe2f48e-a3e6-4633-b9i08-5a712e8f6c62
+GET http://localhost:3000/api/v1/orders/3fe2f48e-a3e6-4633-b9i08-5a712e8f6c62
 
 ###
-POST http://localhost:3000/orders
+POST http://localhost:3000/api/v1/orders
 Content-Type: application/json
 
 {
-  "amount": -3
+  "amount": 10
 }
 
 ###
-PATCH http://localhost:3000/orders/3baf2766-acec-4552-919b-cc1bd4ac49aa
+PATCH http://localhost:3000/api/v1/orders/17e014b0-afbb-41c0-8912-bd46bdb46693
 Content-Type: application/json
 
 {
-  "amount": 300
+  "amount": 310
 }
 
 ###
-DELETE http://localhost:3000/orders/3baf2766-acec-4552-919b-cc1bd4ac49aa
+DELETE http://localhost:3000/api/v1/orders/3baf2766-acec-4552-919b-cc1bd4ac49aa

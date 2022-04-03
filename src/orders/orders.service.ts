@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Connection } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
 
 @Injectable()
 export class OrdersService {
+  private connection: Connection;
   constructor(
     @InjectModel(Order)
     private orderModel: typeof Order,
@@ -24,9 +26,21 @@ export class OrdersService {
   }
 
   async update(id: string, updateOrderDto: UpdateOrderDto) {
-    const order = await this.orderModel.findByPk(id, { rejectOnEmpty: true });
-    order.update({ amount: updateOrderDto.amount });
-    return order;
+    const queryRunner = this.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const order = await this.orderModel.findByPk(id, { rejectOnEmpty: true });
+      order.update({ amount: updateOrderDto.amount });
+
+      await queryRunner.commitTransaction();
+      return order;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   async remove(id: string) {
